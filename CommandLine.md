@@ -60,7 +60,12 @@ samtools rmdup <sample id>.bam <sample id>.rmdup.bam
 ```
 java -Xmx10g -jar GenomeAnalysisTK.jar -R panyang.fa -T RealignerTargetCreator -o <sample id>.intervals -I <sample id>.rmdup.bam
 java -Xmx10g -jar GenomeAnalysisTK.jar -R panyang.fa -T IndelRealigner -targetIntervals <sample id>.intervals -o <sample id>.realn.bam -I <sample id>.rmdup.bam
-java -Xmx10g -jar GenomeAnalysisTK.jar -nct 12 -R panyang.fa -T HaplotypeCaller -I <sample id>.realn.bam -out_mode EMIT_VARIANTS_ONLY -o <sample id>.vcf
+```
+### SAMtools
+#### Version: 0.1.19
+#### Command Line
+```
+samtools mpileup -DSug -C 50 -q 30 -Q 20 -f panyang.fa all.shortlib.sort.bam | bcftools view -Ncvg - | gzip -c - > panyang.raw.vcf.gz
 ```
 # Part4 Annotation
 ### RepeatMasker
